@@ -1,0 +1,107 @@
+---
+- :name: FOOD_DES
+  :columns:
+  - NDB_No varchar(5) NOT NULL
+  - FdGrp_Cd varchar(4) NOT NULL
+  - Long_Desc varchar(200) NOT NULL
+  - Shrt_Desc varchar(60)
+  - ComName varchar(100)
+  - ManufacName varchar(65)
+  - Survey varchar(1)
+  - Ref_desc varchar(135)
+  - Refuse integer
+  - SciName varchar(65)
+  - N_Factor decimal(4,2)
+  - Pro_Factor decimal(4,2)
+  - Fat_Factor decimal(4,2)
+  - CHO_Factor decimal(4,2)
+
+- :name: FD_GROUP
+  :columns: 
+  - FdGrp_Cd varchar(4) NOT NULL
+  - FdGrp_Desc varchar(60) NOT NULL
+
+- :name: LANGUAL
+  :columns: 
+  - NDB_No varchar(5) NOT NULL
+  - Factor_Code varchar(5) NOT NULL
+  
+- :name: LANGDESC
+  :columns:
+  - Factor_Code varchar(5) NOT NULL
+  - Description varchar(140) NOT NULL
+
+- :name: NUT_DATA
+  :columns:
+  - NDB_No varchar(5) NOT NULL
+  - Nutr_No varchar(3) NOT NULL
+  - Nutr_Val decimal(10, 3) NOT NULL
+  - Num_Data_Pts decimal(5, 0) NOT NULL
+  - Std_Error decimal(8, 3)
+  - Src_Cd varchar(2) NOT NULL
+  - Deriv_Cd varchar(4)
+  - Ref_NDB_No varchar(5)
+  - Add_Nutr_Mark varchar(1)
+  - Num_Studies integer
+  - Min decimal(10, 3)
+  - Max decimal(10, 3)
+  - DF integer
+  - Low_EB decimal(10, 3)
+  - Up_EB decimal(10, 3)
+  - Stat_cmd varchar(10)
+  - CC varchar(1)
+
+- :name: NUTR_DEF
+  :columns:
+  - Nutr_No varchar(3) NOT NULL
+  - Units varchar(7) NOT NULL
+  - Tagname varchar(20)
+  - NutrDesc varchar(60) NOT NULL
+  - Num_Dec varchar(1) NOT NULL
+  - SR_Order varchar(6) NOT NULL
+
+- :name: SRC_CD
+  :columns:
+  - Src_Cd varchar(2) NOT NULL
+  - SrcCd_Desc varchar(60) NOT NULL
+
+- :name: DERIV_CD
+  :columns:
+  - Deriv_Cd varchar(4) NOT NULL
+  - Deriv_Desc varchar(120) NOT NULL
+
+- :name: WEIGHT
+  :columns:
+  - NDB_No varchar(5) NOT NULL
+  - Seq varchar(2) NOT NULL
+  - Amount decimal(5, 3) NOT NULL
+  - Msre_Desc varchar(80) NOT NULL
+  - Gm_Wgt decimal(7, 1) NOT NULL
+  - Num_Data_Pts integer
+  - Std_Dev decimal(7, 3)
+
+- :name: FOOTNOTE
+  :columns:
+  - NDB_No varchar(5) NOT NULL
+  - Footnt_No varchar(4) NOT NULL
+  - Footnt_Typ varchar(1) NOT NULL
+  - Nutr_No varchar(3)
+  - Footnt_Txt varchar(200) NOT NULL
+
+- :name: DATSRCLN
+  :columns:
+  - NDB_No varchar(5) NOT NULL
+  - Nutr_No varchar(3) NOT NULL
+  - DataSrc_ID varchar(6) NOT NULL
+
+- :name: DATA_SRC
+  :columns:
+  - DataSrc_ID varchar(6) NOT NULL
+  - Authors varchar(255)
+  - Title varchar(255) NOT NULL
+  - Year varchar(4)
+  - Journal varchar(135)
+  - Vol_City varchar(16)
+  - Issue_State varchar(5)
+  - Start_Page varchar(5)
+  - End_Page varchar(5)
