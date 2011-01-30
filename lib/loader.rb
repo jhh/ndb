@@ -21,23 +21,19 @@ class Loader
 
   def load
     @tables.each do |table|
-      puts "> Loading #{table[:name]}"
+      log "> Loading #{table[:name]}"
       load_table(insert_stmt(table), table[:name])
     end
   end
 
   def index
-    @db.execute_batch <<-SQL
-    drop index if exists food_des_idx;
-    create unique index food_des_idx on FOOD_DES (NDB_No);
-    drop index if exists nut_data_idx;
-    create unique index nut_data_idx on NUT_DATA (NDB_No, Nutr_No);
-    drop index if exists nutr_def_idx;
-    create unique index nutr_def_idx on NUTR_DEF (Nutr_No, Tagname);
-    SQL
+    log "> Creating indices"
+    sql = IO.read("lib/sql/create_indices.sql")
+    @db.execute_batch(sql)
   end
 
   def pivot
+    log "> Creating FOOD table with full-text search"
     sql = IO.read("lib/sql/create_food_table.sql")
     @db.execute_batch(sql)
   end
@@ -63,7 +59,9 @@ private
     sql
   end
 
-
+ def log(message)
+   puts message
+ end
 
   # Takes a '^' delimited line from the SR ASCII files and parses data into an array
   def process_line(line)
@@ -84,7 +82,7 @@ private
         STDOUT.write("#{count}...") && STDOUT.flush if (count += 1) % 1000 == 0
       end
       @db.commit
-      STDOUT.write("\n")
+      STDOUT.write("\n") if count > 999
     end
   end
 
