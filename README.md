@@ -2,7 +2,7 @@ README
 ======
 
 Import the USDA National Nutrient Database for Standard Reference into a
-Sqlite3 database.
+Sqlite3 database. Tested on ruby 1.9.2.
 
 Instructions
 ------------
@@ -33,8 +33,8 @@ create a subdirectory called 'sr23' and should look like:
 if needed.
 
 4. Run `rake load` to create database and, optionally, `rake pivot` to create
-a flattened table with nutrient values (requires [fts4][fts] extensions to
-Sqlite).
+a flattened table with nutrient values (pivot task requires [fts4][fts]
+extensions to Sqlite).
 
 [ndl]: http://www.ars.usda.gov/nutrientdata
 [bundler]: http://gembundler.com/
