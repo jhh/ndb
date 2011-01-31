@@ -1,12 +1,11 @@
 require_relative 'test_helper'
 
 class TestLoader < Test::Unit::TestCase
-  
+
   def setup
     @db = SQLite3::Database.new(ENV["NDB_DB"])
   end
-  
-  
+
   must "have equal db rows and text file lines" do
     ndb_table_names.each do |table|
       File.open(ndb_table_data_path(table), 'r') do |file|
