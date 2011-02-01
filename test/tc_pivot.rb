@@ -2,13 +2,6 @@ require_relative 'test_helper'
 
 class TestPivot < Test::Unit::TestCase
 
-  REF_QUERY = <<-SQL
-    select nd.nutr_val
-    from FOOD_DES f inner join NUT_DATA nd on f.ndb_no = nd.ndb_no
-    inner join NUTR_DEF n on nd.nutr_no = n.nutr_no
-    where n.tagname = ? and f.ndb_no like ?
-    SQL
-
   def setup
     @db = SQLite3::Database.new(ENV["NDB_DB"])
   end
@@ -143,11 +136,21 @@ class TestPivot < Test::Unit::TestCase
 
   def run_nutrient_value_test(tagname, column)
     ndb_numbers = random_ndb_numbers(10)
+
+    ref_ps = @db.prepare <<-SQL
+      select nd.nutr_val
+      from FOOD_DES f inner join NUT_DATA nd on f.ndb_no = nd.ndb_no
+      inner join NUTR_DEF n on nd.nutr_no = n.nutr_no
+      where n.tagname = ? and f.ndb_no like ?
+    SQL
+
+    test_ps = @db.prepare("select #{column} from FOOD where ndb_number = ?")
+
     ndb_numbers.each do |ndb_no|
-      result = @db.get_first_row(REF_QUERY, [tagname, ndb_no])
-      ref_val = result ? result[0] : nil
-      result = @db.get_first_row("select #{column} from FOOD where ndb_number = ?", [ndb_no])
-      test_val = result ? result[0] : nil
+      result = ref_ps.execute!([tagname, ndb_no])
+      ref_val = result[0] ? result[0][0] : nil
+      result = test_ps.execute!([ndb_no])
+      test_val = result[0] ? result[0][0] : nil
       assert_equal(ref_val, test_val, "Expected #{column} wrong")
     end
   end
