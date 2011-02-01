@@ -141,7 +141,7 @@ class TestPivot < Test::Unit::TestCase
       select nd.nutr_val
       from FOOD_DES f inner join NUT_DATA nd on f.ndb_no = nd.ndb_no
       inner join NUTR_DEF n on nd.nutr_no = n.nutr_no
-      where n.tagname = ? and f.ndb_no like ?
+      where n.tagname = ? and f.ndb_no = ?
     SQL
 
     test_ps = @db.prepare("select #{column} from FOOD where ndb_number = ?")
